@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow Studio - Nairobi Salon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #6B46C1;
+            --light-purple: #9333EA;
+            --gold: #F59E0B;
+            --light-gold: #FCD34D;
+            --dark-gold: #D97706;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #FFFFFF;
+            --bg-light: #F9FAFB;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-purple);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-purple);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
+            padding: 120px 0 80px;
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://picsum.photos/seed/salon-hero/1920/800.jpg') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--white);
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--dark-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-purple);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(107, 70, 193, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            color: var(--primary-purple);
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .service-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            background: url('https://picsum.photos/seed/salon-about/600/400.jpg') center/cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            color: var(--primary-purple);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* Location Section */
+        .location {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .location-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background: url('https://picsum.photos/seed/nairobi-map/600/400.jpg') center/cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .location-info h3 {
+            font-size: 2rem;
+            color: var(--primary-purple);
+            margin-bottom: 1.5rem;
+        }
+
+        .location-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .location-details p {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-details strong {
+            color: var(--text-dark);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 2rem;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content,
+            .location-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">Glow <span>Studio</span></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#location">Location</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Transform Your Beauty</h1>
+                <p>Premium salon services in the heart of Nairobi. Where beauty meets excellence.</p>
+                <a href="https://wa.me/254700000000?text=Hi%20Glow%20Studio,%20I'd%20like%20to%20book%20an%20appointment" class="cta-button">Book Appointment</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Premium beauty treatments at affordable prices</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">✂️</div>
+                    <h3 class="service-title">Hair Styling</h3>
+                    <p class="service-description">Professional cuts, styling, and treatments for all hair types</p>
+                    <div class="service-price">KES 1,500</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">💅</div>
+                    <h3 class="service-title">Manicure & Pedicure</h3>
+                    <p class="service-description">Luxurious nail care with premium products</p>
+                    <div class="service-price">KES 2,000</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">💄</div>
+                    <h3 class="service-title">Makeup Artistry</h3>
+                    <p class="service-description">Professional makeup for events and special occasions</p>
+                    <div class="service-price">KES 3,500</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🧖‍♀️</div>
+                    <h3 class="service-title">Facial Treatment</h3>
+                    <p class="service-description">Rejuvenating facial treatments for glowing skin</p>
+                    <div class="service-price">KES 2,500</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">💇‍♀️</div>
+                    <h3 class="service-title">Hair Coloring</h3>
+                    <p class="service-description">Expert hair coloring with quality products</p>
+                    <div class="service-price">KES 4,000</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">⭐</div>
+                    <h3 class="service-title">Bridal Package</h3>
+                    <p class="service-description">Complete bridal beauty package for your special day</p>
+                    <div class="service-price">KES 8,000</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Glow Studio</h2>
+            <div class="about-content">
+                <div class="about-image"></div>
+                <div class="about-text">
+                    <h3>Your Beauty, Our Passion</h3>
+                    <p>Located in the heart of Nairobi, Glow Studio is your premier destination for all beauty services. Our team of experienced professionals is dedicated to helping you look and feel your absolute best.</p>
+                    <p>With over 10 years of experience in the beauty industry, we combine the latest techniques with premium products to deliver exceptional results. Whether you're looking for a quick touch-up or a complete transformation, we're here to make your beauty dreams come true.</p>
+                    <p>Our mission is to provide a luxurious, relaxing environment where you can escape the hustle and bustle of Nairobi life and emerge feeling refreshed, confident, and beautiful.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location" id="location">
+        <div class="container">
+            <h2 class="section-title">Visit Us</h2>
+            <div class="location-content">
+                <div class="location-info">
+                    <h3>Find Us in Nairobi</h3>
+                    <div class="location-details">
+                        <p><strong>📍 Address:</strong> Westlands Shopping Mall, 2nd Floor, Mombasa Road, Nairobi</p>
+                        <p><strong>🕒 Hours:</strong> Mon-Sat: 9:00 AM - 8:00 PM, Sun: 10:00 AM - 6:00 PM</p>
+                        <p><strong>📞 Phone:</strong> +254 700 000 000</p>
+                        <p><strong>✉️ Email:</strong> info@glowstudio.co.ke</p>
+                    </div>
+                    <a href="https://wa.me/254700000000?text=Hi%20Glow%20Studio,%20I'd%20like%20directions%20to%20your%20salon" class="cta-button">Get Directions</a>
+                </div>
+                <div class="map-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/254700000000?text=Hi%20Glow%20Studio,%20I'd%20like%20to%20book%20an%20appointment" class="whatsapp-float" target="_blank">💬</a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <p>&copy; 2024 Glow Studio. All rights reserved.</p>
+                </div>
+                <div class="social-links">
+                    <a href="#">📘</a>
+                    <a href="#">📷</a>
+                    <a href="#">🐦</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
