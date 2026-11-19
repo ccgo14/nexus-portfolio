@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0066cc">
     <title>MedPlus Pharmacy - Nairobi's Trusted Pharmacy</title>
     <meta name="description" content="MedPlus Pharmacy - Your trusted pharmacy in Nairobi offering prescription services, over-the-counter medicines, and health consultations.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💊</text></svg>">
@@ -28,6 +29,13 @@
             line-height: 1.6;
             color: var(--text-dark);
             background-color: var(--white);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        a, button {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .container {
@@ -57,6 +65,9 @@
             font-weight: bold;
             color: var(--primary-blue);
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
         }
 
         .nav-links {
@@ -77,12 +88,17 @@
 
         .mobile-menu-btn {
             display: none;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            min-height: 44px;
             background: none;
             border: none;
             font-size: 1.6rem;
             color: var(--primary-blue);
             cursor: pointer;
-            padding: 0.25rem 0.5rem;
+            padding: 0.25rem;
+            border-radius: 8px;
         }
 
         /* Hero Section */
@@ -307,8 +323,16 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            nav.container {
+                padding: 0.6rem 20px;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
             .mobile-menu-btn {
-                display: block;
+                display: inline-flex;
             }
 
             .nav-links {
@@ -319,17 +343,39 @@
                 width: 100%;
                 background: var(--white);
                 flex-direction: column;
-                padding: 1rem 20px;
-                gap: 1rem;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                padding: 0.5rem 20px 1rem;
+                gap: 0;
+                max-height: calc(100dvh - 64px);
+                overflow-y: auto;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.12);
             }
 
             .nav-links.active {
                 display: flex;
             }
 
+            .nav-links li {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: flex;
+                align-items: center;
+                min-height: 44px;
+                padding: 0.5rem 0.25rem;
+            }
+
+            .hero {
+                padding: 3rem 0;
+            }
+
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.95rem;
+                line-height: 1.25;
             }
 
             .hero p {
@@ -339,14 +385,65 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+                gap: 0.75rem;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                min-height: 48px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .services,
+            .hours,
+            .contact {
+                padding: 3rem 0;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+                margin-bottom: 1.75rem;
             }
 
             .services-grid {
                 grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+
+            .service-card,
+            .contact-card,
+            .hours-table,
+            .map-placeholder {
+                padding: 1.25rem;
+            }
+
+            .contact-card p {
+                overflow-wrap: anywhere;
             }
 
             .contact-info {
                 grid-template-columns: 1fr;
+                gap: 1.25rem;
+                margin-bottom: 2rem;
+            }
+
+            .whatsapp-btn {
+                width: 100%;
+                max-width: 300px;
+                min-height: 50px;
+                justify-content: center;
+                padding: 14px 24px;
+            }
+
+            .map-placeholder iframe {
+                height: 280px;
+            }
+
+            footer {
+                padding: 1.75rem 0 calc(1.75rem + env(safe-area-inset-bottom, 0px));
             }
         }
 
@@ -370,7 +467,7 @@
     <header>
         <nav class="container">
             <a href="#" class="logo">🏥 MedPlus Pharmacy</a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+            <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
@@ -500,17 +597,33 @@
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
 
+        function setMenuState(isOpen) {
+            if (!mobileMenuBtn || !navLinks) return;
+            navLinks.classList.toggle('active', isOpen);
+            mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+        }
+
         if (mobileMenuBtn && navLinks) {
             mobileMenuBtn.addEventListener('click', () => {
-                const isOpen = navLinks.classList.toggle('active');
-                mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+                setMenuState(!navLinks.classList.contains('active'));
             });
 
             navLinks.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    setMenuState(false);
                 });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    setMenuState(false);
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                    setMenuState(false);
+                }
             });
         }
     </script>

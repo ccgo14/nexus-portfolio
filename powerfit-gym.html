@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
     <title>PowerFit Gym - Nairobi's Premier Fitness Center</title>
     <meta name="description" content="PowerFit Gym - Transform your fitness journey in Nairobi. Premium equipment, personal training, and affordable membership packages.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💪</text></svg>">
@@ -27,6 +28,12 @@
             line-height: 1.6;
             color: var(--text-dark);
             overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        a, button {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .container {
@@ -57,6 +64,9 @@
             font-weight: bold;
             color: var(--primary-color);
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
         }
 
         .nav-links {
@@ -80,13 +90,13 @@
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
             background-size: cover;
             background-position: center;
-            min-height: calc(100vh - 80px);
-            padding: 60px 0;
+            min-height: 100vh;
+            min-height: 100svh;
+            padding: 120px 0 60px;
             display: flex;
             align-items: center;
             text-align: center;
             color: var(--text-light);
-            margin-top: 80px;
         }
 
         .hero-content h1 {
@@ -275,23 +285,32 @@
             background: var(--secondary-color);
             color: var(--text-light);
             text-align: center;
-            padding: 2rem 0;
+            padding: 2rem 0 calc(2rem + env(safe-area-inset-bottom, 0px));
         }
 
         .social-links {
             margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .social-links a {
             color: var(--text-light);
-            font-size: 1.5rem;
-            margin: 0 10px;
+            font-size: 1.4rem;
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, background-color 0.3s ease;
         }
 
         .social-links a:hover {
             color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Animations */
@@ -309,14 +328,28 @@
         /* Mobile Responsive */
         .mobile-menu {
             display: none;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            min-height: 44px;
             background: none;
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 8px;
         }
 
         @media (max-width: 768px) {
+            nav.container {
+                padding: 0.6rem 20px;
+            }
+
+            .logo {
+                font-size: 1.55rem;
+            }
+
             .nav-links {
                 display: none;
                 position: absolute;
@@ -325,36 +358,112 @@
                 width: 100%;
                 background: var(--secondary-color);
                 flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                gap: 0.25rem;
+                padding: 0.5rem 20px 1rem;
+                max-height: calc(100dvh - 64px);
+                overflow-y: auto;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.45);
             }
 
             .nav-links.active {
                 display: flex;
             }
 
+            .nav-links li {
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                min-height: 44px;
+                padding: 0.5rem 0;
+            }
+
             .mobile-menu {
-                display: block;
+                display: inline-flex;
+            }
+
+            .hero {
+                padding: 100px 0 48px;
             }
 
             .hero-content h1 {
-                font-size: 2.5rem;
+                font-size: 2.15rem;
+                line-height: 1.2;
             }
 
             .hero-content p {
-                font-size: 1.1rem;
+                font-size: 1.05rem;
+                margin-bottom: 1.5rem;
             }
 
-            .location-content {
-                grid-template-columns: 1fr;
+            .cta-button {
+                min-height: 48px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                max-width: 280px;
+                padding: 13px 24px;
+            }
+
+            .membership,
+            .whatsapp-section,
+            .location {
+                padding: 48px 0;
+            }
+
+            .section-title {
+                font-size: 1.9rem;
+                margin-bottom: 2rem;
             }
 
             .packages {
                 grid-template-columns: 1fr;
+                gap: 2.25rem;
+                margin-top: 1.5rem;
             }
 
-            .section-title {
-                font-size: 2rem;
+            .package {
+                padding: 1.75rem 1.25rem;
+            }
+
+            .package .cta-button {
+                max-width: none;
+            }
+
+            .whatsapp-button {
+                width: 100%;
+                max-width: 300px;
+                min-height: 52px;
+                justify-content: center;
+                padding: 14px 24px;
+                font-size: 1.05rem;
+            }
+
+            .location-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .location-info h3 {
+                font-size: 1.65rem;
+            }
+
+            .location-info p {
+                font-size: 1rem;
+            }
+
+            .map-placeholder {
+                height: 280px;
             }
         }
 
@@ -382,7 +491,7 @@
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="#location">Location</a></li>
             </ul>
-            <button class="mobile-menu" id="mobileMenu">☰</button>
+            <button type="button" class="mobile-menu" id="mobileMenu" aria-label="Toggle menu" aria-expanded="false">☰</button>
         </nav>
     </header>
 
@@ -487,10 +596,10 @@
     <footer>
         <div class="container">
             <div class="social-links">
-                <a href="#">📧</a>
-                <a href="#">📘</a>
-                <a href="#">📷</a>
-                <a href="#">🐦</a>
+                <a href="#" aria-label="Email">📧</a>
+                <a href="#" aria-label="Facebook">📘</a>
+                <a href="#" aria-label="Instagram">📷</a>
+                <a href="#" aria-label="Twitter">🐦</a>
             </div>
             <p>&copy; 2024 PowerFit Gym. All rights reserved. | Nairobi, Kenya</p>
         </div>
@@ -500,10 +609,29 @@
         // Mobile menu toggle
         const mobileMenu = document.getElementById('mobileMenu');
         const navLinks = document.getElementById('navLinks');
+        const header = document.querySelector('header');
+
+        function setMenuState(isOpen) {
+            if (!mobileMenu || !navLinks) return;
+            navLinks.classList.toggle('active', isOpen);
+            mobileMenu.setAttribute('aria-expanded', String(isOpen));
+        }
 
         if (mobileMenu && navLinks) {
             mobileMenu.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
+                setMenuState(!navLinks.classList.contains('active'));
+            });
+
+            document.addEventListener('click', (e) => {
+                if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    setMenuState(false);
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                    setMenuState(false);
+                }
             });
         }
 
@@ -515,20 +643,18 @@
                 const target = document.querySelector(href);
                 if (target) {
                     e.preventDefault();
-                    const offsetTop = target.offsetTop - 80;
+                    const headerOffset = header ? header.offsetHeight : 64;
+                    const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
                     window.scrollTo({
                         top: offsetTop,
                         behavior: 'smooth'
                     });
-                    if (navLinks) {
-                        navLinks.classList.remove('active');
-                    }
+                    setMenuState(false);
                 }
             });
         });
 
         // Add scroll effect to header
-        const header = document.querySelector('header');
         if (header) {
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 100) {
