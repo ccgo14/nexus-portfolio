@@ -25,15 +25,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-menu a');
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-            const spans = mobileMenuBtn.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
+            if (navMenu) {
+                navMenu.classList.remove('active');
+            }
+            if (mobileMenuBtn) {
+                const spans = mobileMenuBtn.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
         });
     });
 
-    // Scroll animations
+    // Scroll animations (keep above-the-fold hero visible immediately)
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -47,8 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Add fade-in class to sections
-    const sections = document.querySelectorAll('section');
+    const sections = document.querySelectorAll('section:not(#home)');
     sections.forEach(section => {
         section.classList.add('fade-in');
         observer.observe(section);
@@ -58,11 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
     anchorLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#') return;
             const targetSection = document.querySelector(targetId);
-            
+
             if (targetSection) {
+                e.preventDefault();
                 const offsetTop = targetSection.offsetTop - 80; // Account for fixed header
                 window.scrollTo({
                     top: offsetTop,
@@ -75,23 +79,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Header scroll effect
     let lastScrollTop = 0;
     const header = document.querySelector('.header');
-    
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // Scrolling down
-            header.style.transform = 'translateY(-100%)';
-        } else {
-            // Scrolling up
-            header.style.transform = 'translateY(0)';
-        }
-        
-        lastScrollTop = scrollTop;
-    });
 
-    // Add transition to header
-    header.style.transition = 'transform 0.3s ease';
+    if (header) {
+        header.style.transition = 'transform 0.3s ease';
+        window.addEventListener('scroll', function() {
+            const scrollTop = Math.max(0, window.pageYOffset || document.documentElement.scrollTop);
+            const menuOpen = navMenu && navMenu.classList.contains('active');
+
+            if (!menuOpen && scrollTop > lastScrollTop && scrollTop > 120) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+
+            lastScrollTop = scrollTop;
+        });
+    }
 });
 
 // WhatsApp order functionality

@@ -75,6 +75,16 @@
             color: var(--primary-blue);
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            color: var(--primary-blue);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
@@ -297,8 +307,25 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem 20px;
+                gap: 1rem;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
             }
 
             .hero h1 {
@@ -323,11 +350,18 @@
             }
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        section[id] {
+            scroll-margin-top: 80px;
+        }
+
         /* Loading optimization */
         img {
             max-width: 100%;
             height: auto;
-            loading: lazy;
         }
     </style>
 </head>
@@ -336,7 +370,8 @@
     <header>
         <nav class="container">
             <a href="#" class="logo">🏥 MedPlus Pharmacy</a>
-            <ul class="nav-links">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#hours">Hours</a></li>
@@ -443,11 +478,13 @@
             </div>
 
             <div class="map-placeholder">
-                <h3 style="margin-bottom: 1rem;">Find Us on Google Maps</h3>
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8174433068!2d36.8217!3d-1.2921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDE3JzMxLjYiTiAzNsKwNDknMTguMSJF!5e0!3m2!1sen!2ske!4v1234567890"
+                <h3 style="margin-bottom: 1rem;">Find Us on the Map</h3>
+                <iframe
+                    title="MedPlus Pharmacy Location Map"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=36.8155%2C-1.2903%2C36.8295%2C-1.2763&amp;layer=mapnik&amp;marker=-1.2833%2C36.8225"
                     allowfullscreen=""
-                    loading="lazy">
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
         </div>
@@ -459,5 +496,23 @@
             <p>&copy; 2024 MedPlus Pharmacy. All rights reserved. | Licensed Pharmacy in Nairobi, Kenya</p>
         </div>
     </footer>
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('active');
+                mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    </script>
 </body>
 </html>

@@ -81,6 +81,16 @@
             color: var(--primary-purple);
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            color: var(--primary-purple);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
@@ -261,9 +271,16 @@
         .map-container {
             width: 100%;
             height: 400px;
-            background: url('https://picsum.photos/seed/nairobi-map/600/400.jpg') center/cover;
             border-radius: 15px;
+            overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
         }
 
         .location-info h3 {
@@ -346,8 +363,25 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem 20px;
+                gap: 1rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
             }
 
             .hero h1 {
@@ -390,6 +424,10 @@
         html {
             scroll-behavior: smooth;
         }
+
+        section[id] {
+            scroll-margin-top: 80px;
+        }
     </style>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💇</text></svg>">
 </head>
@@ -398,7 +436,8 @@
     <header>
         <nav class="container">
             <a href="#" class="logo">Glow <span>Studio</span></a>
-            <ul class="nav-links">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#about">About</a></li>
@@ -501,7 +540,14 @@
                     </div>
                     <a href="https://wa.me/254700000000?text=Hi%20Glow%20Studio,%20I'd%20like%20directions%20to%20your%20salon" class="cta-button">Get Directions</a>
                 </div>
-                <div class="map-container"></div>
+                <div class="map-container">
+                    <iframe
+                        title="Glow Studio Location Map"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=36.7980%2C-1.2740%2C36.8120%2C-1.2600&amp;layer=mapnik&amp;marker=-1.2670%2C36.8050"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
             </div>
         </div>
     </section>
@@ -524,5 +570,23 @@
             </div>
         </div>
     </footer>
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('active');
+                mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    </script>
 </body>
 </html>

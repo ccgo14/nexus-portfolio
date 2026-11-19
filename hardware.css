@@ -660,7 +660,6 @@ p {
     }
 
     .product-card {
-        margin: 0 -5px;
         border-radius: 10px;
     }
 
@@ -733,6 +732,10 @@ p {
 /* Smooth Scrolling */
 html {
     scroll-behavior: smooth;
+}
+
+section[id] {
+    scroll-margin-top: 80px;
 }
 
 /* Loading Optimization */
